@@ -251,11 +251,11 @@ class Bottomation {
     VoidCallback? onSuccess,
     Duration? autoResetDuration = const Duration(seconds: 3),
     Duration entryDuration = const Duration(milliseconds: 550),
-    Duration doorsOpenDuration = const Duration(milliseconds: 320),
-    Duration packageLoadDuration = const Duration(milliseconds: 500),
-    Duration doorsCloseDuration = const Duration(milliseconds: 300),
+    Duration doorsOpenDuration = const Duration(milliseconds: 400),
+    Duration packageLoadDuration = const Duration(milliseconds: 550),
+    Duration doorsCloseDuration = const Duration(milliseconds: 380),
     Duration headlightsAndRoadDuration = const Duration(milliseconds: 450),
-    Duration driveOffDuration = const Duration(milliseconds: 650),
+    Duration driveOffDuration = const Duration(milliseconds: 1200),
     Duration successDuration = const Duration(milliseconds: 450),
   }) {
     return AnimatedPlaceOrderButton(

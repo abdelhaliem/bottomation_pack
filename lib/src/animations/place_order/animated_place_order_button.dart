@@ -144,11 +144,11 @@ class AnimatedPlaceOrderButton extends StatefulWidget {
     this.onSuccess,
     this.autoResetDuration = const Duration(seconds: 3),
     this.entryDuration = const Duration(milliseconds: 550),
-    this.doorsOpenDuration = const Duration(milliseconds: 320),
-    this.packageLoadDuration = const Duration(milliseconds: 500),
-    this.doorsCloseDuration = const Duration(milliseconds: 300),
+    this.doorsOpenDuration = const Duration(milliseconds: 400),
+    this.packageLoadDuration = const Duration(milliseconds: 550),
+    this.doorsCloseDuration = const Duration(milliseconds: 380),
     this.headlightsAndRoadDuration = const Duration(milliseconds: 450),
-    this.driveOffDuration = const Duration(milliseconds: 650),
+    this.driveOffDuration = const Duration(milliseconds: 1200),
     this.successDuration = const Duration(milliseconds: 450),
   });
 
@@ -577,18 +577,18 @@ class _AnimatedPlaceOrderButtonState extends State<AnimatedPlaceOrderButton>
     double truckX;
     if (_driveOffController.isAnimating || _driveOffController.isCompleted) {
       final t = _driveOffAnimation.value;
-      if (t < 0.25) {
-        // Recoil backward (anticipation)
-        final recoilProgress = t / 0.25;
-        final recoilDelta = math.sin(recoilProgress * math.pi) * 6.0;
+      if (t < 0.20) {
+        // Recoil backward (anticipation) ~240ms
+        final recoilProgress = t / 0.20;
+        final recoilDelta = math.sin(recoilProgress * math.pi) * 5.0;
         truckX = _isRtl
             ? restingTruckX + recoilDelta
             : restingTruckX - recoilDelta;
       } else {
-        // High speed acceleration forward
-        final launchProgress = (t - 0.25) / 0.75;
-        final curveValue = Curves.easeInCubic.transform(launchProgress);
-        final targetOffscreenX = _isRtl ? -100.0 : width + 100.0;
+        // Smooth, visible vehicular acceleration drive-off along the highway
+        final launchProgress = (t - 0.20) / 0.80;
+        final curveValue = Curves.easeInQuad.transform(launchProgress);
+        final targetOffscreenX = _isRtl ? -120.0 : width + 120.0;
         truckX = restingTruckX + (targetOffscreenX - restingTruckX) * curveValue;
       }
     } else {
@@ -645,9 +645,14 @@ class _AnimatedPlaceOrderButtonState extends State<AnimatedPlaceOrderButton>
       headlightsProgress = _headlightsAndRoadAnimation.value;
       roadProgress = _headlightsAndRoadAnimation.value;
     }
-    // Fade road as truck drives off
+    // Fade road only towards the end as truck exits
     if (_driveOffController.isAnimating) {
-      roadProgress = (1.0 - _driveOffAnimation.value).clamp(0.0, 1.0);
+      final t = _driveOffAnimation.value;
+      if (t < 0.70) {
+        roadProgress = 1.0;
+      } else {
+        roadProgress = ((1.0 - t) / 0.30).clamp(0.0, 1.0);
+      }
     }
 
     return Positioned.fill(

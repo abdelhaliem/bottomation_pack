@@ -172,30 +172,47 @@ class TopDownTruckPainter extends CustomPainter {
     canvas.drawCircle(Offset(bulbX, -halfH + 3.5), bulbRadius, bulbPaint);
     canvas.drawCircle(Offset(bulbX, halfH - 3.5), bulbRadius, bulbPaint);
 
+    // Cargo interior opening when doors are open
+    if (doorsOpenProgress > 0.05) {
+      final bedOpenH = (halfH - 2.0) * doorsOpenProgress.clamp(0.0, 1.0);
+      final bedRect = Rect.fromLTRB(
+        cargoLeft,
+        -bedOpenH,
+        cargoLeft + 14.0,
+        bedOpenH,
+      );
+      final bedPaint = Paint()
+        ..color = Colors.black.withValues(
+          alpha: (0.35 * doorsOpenProgress).clamp(0.0, 1.0),
+        )
+        ..style = PaintingStyle.fill;
+      canvas.drawRect(bedRect, bedPaint);
+    }
+
     // 7. Articulating Rear Cargo Doors
     // When doorsOpenProgress is 0.0, both doors meet flush at x = cargoLeft, y = 0
-    // As doorsOpenProgress increases, they hinge outwards at top and bottom corners
-    const doorLength = 12.0;
-    const maxOpenAngleRad = 35.0 * math.pi / 180.0;
+    // As doorsOpenProgress increases, they hinge outwards at top and bottom corners up to 130°
+    const doorLength = 13.0;
+    const maxOpenAngleRad = 130.0 * math.pi / 180.0;
     final currentAngle = maxOpenAngleRad * doorsOpenProgress.clamp(0.0, 1.0);
 
     final doorPaint = Paint()
       ..color = cargoColor
-      ..strokeWidth = 2.8
+      ..strokeWidth = 3.0
       ..strokeCap = StrokeCap.round
       ..style = PaintingStyle.stroke;
 
     final doorEdgePaint = Paint()
-      ..color = Colors.black.withValues(alpha: 0.15)
+      ..color = Colors.black.withValues(alpha: 0.18)
       ..strokeWidth = 0.8
       ..strokeCap = StrokeCap.round
       ..style = PaintingStyle.stroke;
 
-    // Top Door Hinge: (cargoLeft, -halfH)
+    // Top Door Hinge: (cargoLeft, -halfH + 1.0)
     final topHingeX = cargoLeft;
     final topHingeY = -halfH + 1.0;
     // When closed (angle = 0): points downwards to (cargoLeft, 0)
-    // When open (angle > 0): swings upward/outward
+    // When open (angle > 0): swings outward and backwards (up & back)
     final topDoorEndX = topHingeX - math.sin(currentAngle) * doorLength;
     final topDoorEndY = topHingeY + math.cos(currentAngle) * doorLength;
 
@@ -210,11 +227,11 @@ class TopDownTruckPainter extends CustomPainter {
       doorEdgePaint,
     );
 
-    // Bottom Door Hinge: (cargoLeft, halfH)
+    // Bottom Door Hinge: (cargoLeft, halfH - 1.0)
     final bottomHingeX = cargoLeft;
     final bottomHingeY = halfH - 1.0;
     // When closed (angle = 0): points upwards to (cargoLeft, 0)
-    // When open (angle > 0): swings downward/outward
+    // When open (angle > 0): swings outward and backwards (down & back)
     final bottomDoorEndX = bottomHingeX - math.sin(currentAngle) * doorLength;
     final bottomDoorEndY = bottomHingeY - math.cos(currentAngle) * doorLength;
 
@@ -228,6 +245,13 @@ class TopDownTruckPainter extends CustomPainter {
       Offset(bottomDoorEndX, bottomDoorEndY),
       doorEdgePaint,
     );
+
+    // Hinge pins
+    final hingePaint = Paint()
+      ..color = Colors.black.withValues(alpha: 0.25)
+      ..style = PaintingStyle.fill;
+    canvas.drawCircle(Offset(topHingeX, topHingeY), 1.8, hingePaint);
+    canvas.drawCircle(Offset(bottomHingeX, bottomHingeY), 1.8, hingePaint);
 
     canvas.restore();
   }
