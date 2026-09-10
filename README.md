@@ -13,6 +13,11 @@ A delightful collection of interactive animated buttons and micro-interactions f
 `bottomation` comes with production-ready, highly engaging micro-interaction buttons:
 
 ### 1. 🗑️ Animated Delete Button (`Bottomation.delete`)
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/abdelhaliem/bottomation_pack/main/bottomation_ex/delete.gif" width="420" alt="Animated Delete Button" />
+</p>
+
 - **Organic Letter Suction**: Letters of the text (e.g. `D - e - l - e - t - e` or `ح - ذ - ف`) dynamically lift, scatter, and fly along Bézier curves straight into the trash bin.
 - **Hinge Lid Physics**: The trash can lid tilts open dynamically to receive the incoming letters and closes once all letters are inside.
 - **Pill-to-Circle Morphing**: Smooth width animation collapsing the button into a focused action circle.
@@ -21,6 +26,11 @@ A delightful collection of interactive animated buttons and micro-interactions f
 - **Arabic & RTL Support**: Native RTL detection with mirrored bin position, reverse lid tilting, and accurate Arabic cursive ligature decomposition.
 
 ### 2. 🚪 Animated Logout Button (`Bottomation.logout`)
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/abdelhaliem/bottomation_pack/main/bottomation_ex/logout.gif" width="420" alt="Animated Logout Button" />
+</p>
+
 - **3D Perspective Swinging Door**: Slender architectural doorway with arched top corners and flat sill, swinging open into 3D perspective.
 - **Marching Letters**: Characters walk sequentially towards and step through the doorway threshold with a dynamic walking bounce.
 - **Threshold Clipping**: Letters disappear seamlessly behind the door frame as they cross the threshold.
