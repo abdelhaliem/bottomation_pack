@@ -156,12 +156,14 @@ class _BottomationShowcasePageState extends State<BottomationShowcasePage> {
                       subtitle: 'Preset Style',
                       child: Bottomation.delete(
                         controller: _purpleDeleteController,
-                        style: DeleteButtonStyle.purple(),
+                        backgroundColor: Colors.red,
+                        textColor: Colors.white,
+                        iconColor: Colors.white,
                         onTap: () async {
-                          _showFeedback('Deleting item (Purple)...');
+                          _showFeedback('Deleting item (Red)...');
                         },
                         onSuccess: () {
-                          _showFeedback('Purple: Item deleted successfully! ✔');
+                          _showFeedback('Red: Item deleted successfully! ✔');
                         },
                       ),
                       onReset: () => _purpleDeleteController.reset(),
@@ -227,8 +229,12 @@ class _BottomationShowcasePageState extends State<BottomationShowcasePage> {
                       child: Bottomation.logout(
                         controller: _crimsonLogoutController,
                         text: 'Logout',
-                        doorColor: Colors.black,
+                        doorColor: Colors.white,
                         style: LogoutButtonStyle.crimson(),
+                        backgroundColor: Colors.black,
+                        backgroundGradient: LinearGradient(
+                          colors: [Colors.red, Colors.red],
+                        ),
                         onTap: () async {
                           _showFeedback('Logging out of account...');
                         },

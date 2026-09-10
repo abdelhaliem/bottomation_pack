@@ -160,9 +160,15 @@ class LogoutButtonStyle {
   }
 
   /// Creates a copy of this style with the given fields replaced.
+  ///
+  /// If [backgroundColor] is specified without a [backgroundGradient], any
+  /// existing [backgroundGradient] will be cleared by default so the solid
+  /// [backgroundColor] takes full effect. You can also pass [clearGradient]
+  /// explicitly.
   LogoutButtonStyle copyWith({
     Color? backgroundColor,
     Gradient? backgroundGradient,
+    bool? clearGradient,
     Color? doorColor,
     Color? doorGlowColor,
     TextStyle? textStyle,
@@ -176,9 +182,14 @@ class LogoutButtonStyle {
     double? width,
     double? borderRadius,
   }) {
+    final bool shouldClearGradient = clearGradient ??
+        (backgroundColor != null && backgroundGradient == null);
+
     return LogoutButtonStyle(
       backgroundColor: backgroundColor ?? this.backgroundColor,
-      backgroundGradient: backgroundGradient ?? this.backgroundGradient,
+      backgroundGradient: shouldClearGradient
+          ? null
+          : (backgroundGradient ?? this.backgroundGradient),
       doorColor: doorColor ?? this.doorColor,
       doorGlowColor: doorGlowColor ?? this.doorGlowColor,
       textStyle: textStyle ?? this.textStyle,

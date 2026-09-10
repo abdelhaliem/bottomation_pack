@@ -220,9 +220,13 @@ class _AnimatedLogoutButtonState extends State<AnimatedLogoutButton>
 
   LogoutButtonStyle _resolveEffectiveStyle() {
     final base = widget.style ?? LogoutButtonStyle.crimson();
+    final bool shouldClearGradient =
+        widget.backgroundColor != null && widget.backgroundGradient == null;
+
     return base.copyWith(
       backgroundColor: widget.backgroundColor,
       backgroundGradient: widget.backgroundGradient,
+      clearGradient: shouldClearGradient,
       doorColor: widget.doorColor,
       doorGlowColor: widget.doorGlowColor,
       textStyle: widget.textColor != null
@@ -487,7 +491,9 @@ class _AnimatedLogoutButtonState extends State<AnimatedLogoutButton>
                 borderRadius: BorderRadius.circular(
                   _style.borderRadius ?? (buttonHeight / 2),
                 ),
-                color: currentColor,
+                color: isSuccess
+                    ? currentColor
+                    : (_style.backgroundGradient == null ? currentColor : null),
                 gradient: isSuccess ? null : _style.backgroundGradient,
                 boxShadow: [
                   BoxShadow(

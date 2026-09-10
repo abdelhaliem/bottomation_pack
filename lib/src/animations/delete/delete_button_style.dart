@@ -123,9 +123,15 @@ class DeleteButtonStyle {
   }
 
   /// Creates a copy of this style with the given fields replaced.
+  ///
+  /// If [backgroundColor] is specified without a [backgroundGradient], any
+  /// existing [backgroundGradient] will be cleared by default so the solid
+  /// [backgroundColor] takes full effect. You can also pass [clearGradient]
+  /// explicitly.
   DeleteButtonStyle copyWith({
     Color? backgroundColor,
     Gradient? backgroundGradient,
+    bool? clearGradient,
     Color? iconColor,
     TextStyle? textStyle,
     Color? progressColor,
@@ -138,9 +144,14 @@ class DeleteButtonStyle {
     double? width,
     double? borderRadius,
   }) {
+    final bool shouldClearGradient = clearGradient ??
+        (backgroundColor != null && backgroundGradient == null);
+
     return DeleteButtonStyle(
       backgroundColor: backgroundColor ?? this.backgroundColor,
-      backgroundGradient: backgroundGradient ?? this.backgroundGradient,
+      backgroundGradient: shouldClearGradient
+          ? null
+          : (backgroundGradient ?? this.backgroundGradient),
       iconColor: iconColor ?? this.iconColor,
       textStyle: textStyle ?? this.textStyle,
       progressColor: progressColor ?? this.progressColor,

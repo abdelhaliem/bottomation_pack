@@ -94,6 +94,56 @@ void main() {
       expect(controller.state, BottomationState.idle);
     });
 
+    testWidgets('Custom backgroundColor overrides preset gradient and clears it in decoration',
+        (tester) async {
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: Center(
+              child: Bottomation.logout(
+                style: LogoutButtonStyle.crimson(),
+                backgroundColor: Colors.blue,
+              ),
+            ),
+          ),
+        ),
+      );
+
+      final container = tester.widget<Container>(find.descendant(
+        of: find.byType(AnimatedLogoutButton),
+        matching: find.byType(Container),
+      ).first);
+      final decoration = container.decoration as BoxDecoration;
+
+      expect(decoration.color, Colors.blue);
+      expect(decoration.gradient, isNull);
+    });
+
+    testWidgets('Custom backgroundGradient applies gradient and leaves color null in decoration',
+        (tester) async {
+      const gradient = LinearGradient(colors: [Colors.purple, Colors.pink]);
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: Center(
+              child: Bottomation.logout(
+                backgroundGradient: gradient,
+              ),
+            ),
+          ),
+        ),
+      );
+
+      final container = tester.widget<Container>(find.descendant(
+        of: find.byType(AnimatedLogoutButton),
+        matching: find.byType(Container),
+      ).first);
+      final decoration = container.decoration as BoxDecoration;
+
+      expect(decoration.color, isNull);
+      expect(decoration.gradient, gradient);
+    });
+
     testWidgets('Renders Arabic RTL "تسجيل الخروج" cleanly and triggers animation', (tester) async {
       bool arabicSuccessCalled = false;
 

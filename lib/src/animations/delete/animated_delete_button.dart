@@ -217,9 +217,13 @@ class _AnimatedDeleteButtonState extends State<AnimatedDeleteButton>
 
   DeleteButtonStyle _resolveEffectiveStyle() {
     final base = widget.style ?? DeleteButtonStyle.dark();
+    final bool shouldClearGradient =
+        widget.backgroundColor != null && widget.backgroundGradient == null;
+
     return base.copyWith(
       backgroundColor: widget.backgroundColor,
       backgroundGradient: widget.backgroundGradient,
+      clearGradient: shouldClearGradient,
       iconColor: widget.iconColor,
       textStyle: widget.textColor != null
           ? base.textStyle.copyWith(color: widget.textColor)
@@ -497,7 +501,9 @@ class _AnimatedDeleteButtonState extends State<AnimatedDeleteButton>
                 borderRadius: BorderRadius.circular(
                   _style.borderRadius ?? (buttonHeight / 2),
                 ),
-                color: currentColor,
+                color: isSuccess
+                    ? currentColor
+                    : (_style.backgroundGradient == null ? currentColor : null),
                 gradient: isSuccess ? null : _style.backgroundGradient,
                 boxShadow: [
                   BoxShadow(

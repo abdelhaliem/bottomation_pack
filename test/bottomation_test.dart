@@ -105,7 +105,7 @@ void main() {
       expect(controller.state, BottomationState.idle);
     });
 
-    testWidgets('Custom colors shortcut overrides default style',
+    testWidgets('Custom colors shortcut overrides default style and clears gradient',
         (tester) async {
       await tester.pumpWidget(
         MaterialApp(
@@ -122,9 +122,65 @@ void main() {
         ),
       );
 
-      final buttonFinder = find.byType(AnimatedDeleteButton);
-      expect(buttonFinder, findsOneWidget);
+      final container = tester.widget<Container>(find.descendant(
+        of: find.byType(AnimatedDeleteButton),
+        matching: find.byType(Container),
+      ).first);
+      final decoration = container.decoration as BoxDecoration;
+
+      expect(decoration.color, Colors.indigo);
+      expect(decoration.gradient, isNull);
       expect(find.text('Delete'), findsOneWidget);
+    });
+
+    testWidgets('Custom backgroundColor overrides preset gradient in style',
+        (tester) async {
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: Center(
+              child: Bottomation.delete(
+                style: DeleteButtonStyle.purple(),
+                backgroundColor: Colors.red,
+              ),
+            ),
+          ),
+        ),
+      );
+
+      final container = tester.widget<Container>(find.descendant(
+        of: find.byType(AnimatedDeleteButton),
+        matching: find.byType(Container),
+      ).first);
+      final decoration = container.decoration as BoxDecoration;
+
+      expect(decoration.color, Colors.red);
+      expect(decoration.gradient, isNull);
+    });
+
+    testWidgets('Custom backgroundGradient applies gradient and leaves color null in decoration',
+        (tester) async {
+      const gradient = LinearGradient(colors: [Colors.blue, Colors.teal]);
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: Center(
+              child: Bottomation.delete(
+                backgroundGradient: gradient,
+              ),
+            ),
+          ),
+        ),
+      );
+
+      final container = tester.widget<Container>(find.descendant(
+        of: find.byType(AnimatedDeleteButton),
+        matching: find.byType(Container),
+      ).first);
+      final decoration = container.decoration as BoxDecoration;
+
+      expect(decoration.color, isNull);
+      expect(decoration.gradient, gradient);
     });
 
     testWidgets('Renders Arabic text and runs animation sequence cleanly',
