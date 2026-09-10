@@ -53,6 +53,10 @@ A delightful collection of interactive animated buttons and micro-interactions f
 
 ### 4. 🚚 Animated Place Order Button (`Bottomation.placeOrder`)
 
+<p align="center">
+  <img src="https://raw.githubusercontent.com/abdelhaliem/bottomation_pack/main/bottomation_ex/place_order.gif" width="420" alt="Animated Place Order Button" />
+</p>
+
 - **Top-Down Articulated Delivery Truck**: Bird's-eye view delivery vehicle with cab, windshield, headlights, and cargo container.
 - **Dual Articulating Cargo Doors**: Rear cargo doors swing open outward with realistic hinge rotation to receive packages.
 - **Automated Package Loading**: Kraft cardboard box glides smoothly between open doors into the truck's cargo hold.
