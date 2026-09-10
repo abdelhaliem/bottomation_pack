@@ -26,3 +26,12 @@ export 'src/animations/logout/logout_button_style.dart';
 export 'src/animations/logout/models/logout_letter_exit_data.dart';
 export 'src/animations/logout/painters/door_exit_painter.dart';
 export 'src/animations/logout/painters/exiting_letters_painter.dart';
+
+// Add to Cart Animation Module
+export 'src/animations/add_to_cart/animated_add_to_cart_button.dart';
+export 'src/animations/add_to_cart/add_to_cart_button_controller.dart';
+export 'src/animations/add_to_cart/add_to_cart_button_style.dart';
+export 'src/animations/add_to_cart/painters/conveyor_belt_painter.dart';
+export 'src/animations/add_to_cart/painters/factory_box_painter.dart';
+export 'src/animations/add_to_cart/painters/isometric_box_painter.dart';
+export 'src/animations/add_to_cart/painters/shopping_cart_painter.dart';

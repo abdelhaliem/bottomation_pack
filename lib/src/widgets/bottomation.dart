@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import '../animations/add_to_cart/animated_add_to_cart_button.dart';
+import '../animations/add_to_cart/add_to_cart_button_controller.dart';
+import '../animations/add_to_cart/add_to_cart_button_style.dart';
 import '../animations/delete/animated_delete_button.dart';
 import '../animations/delete/delete_button_controller.dart';
 import '../animations/delete/delete_button_style.dart';
@@ -132,6 +135,80 @@ class Bottomation {
       doorShutDuration: doorShutDuration,
       collapseDuration: collapseDuration,
       progressDuration: progressDuration,
+      successDuration: successDuration,
+    );
+  }
+
+  /// Creates a delightful animated add-to-cart button featuring a factory conveyor belt,
+  /// overhead laser scanning, cardboard box flap sealing, shipping label stamping,
+  /// realistic shopping cart drop physics, and a popping "+1" badge.
+  ///
+  /// Supports bilingual LTR/RTL layouts (including Arabic "أضف إلى السلة") and full
+  /// color customization.
+  static Widget addToCart({
+    Key? key,
+    String text = 'Add to cart',
+    String successText = 'Added',
+    AddToCartButtonStyle? style,
+    Color? backgroundColor,
+    Gradient? backgroundGradient,
+    Color? boxColor,
+    Color? boxTapeColor,
+    Color? cartColor,
+    Color? badgeColor,
+    Color? badgeTextColor,
+    Color? conveyorColor,
+    Color? scannerLaserColor,
+    Color? textColor,
+    Color? successColor,
+    Color? checkmarkColor,
+    TextDirection? textDirection,
+    double? width,
+    double? height,
+    double? borderRadius,
+    double? elevation,
+    AnimatedAddToCartButtonController? controller,
+    Future<void> Function()? onTap,
+    VoidCallback? onSuccess,
+    Duration? autoResetDuration = const Duration(seconds: 3),
+    Duration deploymentDuration = const Duration(milliseconds: 300),
+    Duration boxEntranceDuration = const Duration(milliseconds: 650),
+    Duration scanAndSealDuration = const Duration(milliseconds: 650),
+    Duration transportAndDropDuration = const Duration(milliseconds: 700),
+    Duration bounceAndBadgeDuration = const Duration(milliseconds: 450),
+    Duration successDuration = const Duration(milliseconds: 500),
+  }) {
+    return AnimatedAddToCartButton(
+      key: key,
+      text: text,
+      successText: successText,
+      style: style,
+      backgroundColor: backgroundColor,
+      backgroundGradient: backgroundGradient,
+      boxColor: boxColor,
+      boxTapeColor: boxTapeColor,
+      cartColor: cartColor,
+      badgeColor: badgeColor,
+      badgeTextColor: badgeTextColor,
+      conveyorColor: conveyorColor,
+      scannerLaserColor: scannerLaserColor,
+      textColor: textColor,
+      successColor: successColor,
+      checkmarkColor: checkmarkColor,
+      textDirection: textDirection,
+      width: width,
+      height: height,
+      borderRadius: borderRadius,
+      elevation: elevation,
+      controller: controller,
+      onTap: onTap,
+      onSuccess: onSuccess,
+      autoResetDuration: autoResetDuration,
+      deploymentDuration: deploymentDuration,
+      boxEntranceDuration: boxEntranceDuration,
+      scanAndSealDuration: scanAndSealDuration,
+      transportAndDropDuration: transportAndDropDuration,
+      bounceAndBadgeDuration: bounceAndBadgeDuration,
       successDuration: successDuration,
     );
   }

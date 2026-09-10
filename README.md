@@ -37,6 +37,15 @@ A delightful collection of interactive animated buttons and micro-interactions f
 - **Door Latch & Success State**: The door swings shut and latches, collapsing into a loading circle and completing with a success checkmark.
 - **Arabic & RTL Support**: Door places on the correct side, swings with proper perspective, and Arabic phrases (`تسجيل الخروج`) march through the threshold.
 
+### 3. 🛒 Animated Add to Cart Button (`Bottomation.addToCart`)
+- **Factory Conveyor Belt & Rollers**: Horizontal industrial conveyor track with moving roller teeth.
+- **Overhead Laser Scanning**: Overhead scanner module shooting a focused red laser beam across the package.
+- **Automatic Flap Sealing & Label Stamping**: Cardboard flaps fold down and seal, and a white shipping label stamps onto the front face.
+- **Gravity Drop & Cart Suspension**: Sealed box rolls into a wireframe shopping cart with a parabolic drop curve and elastic suspension bounce.
+- **"+1" Pop Badge**: Radiant amber notification badge pops and floats above the cart.
+- **Success State ("Added")**: Clean emerald circular checkmark with "Added" (or "تمت الإضافة") label.
+- **Arabic & RTL Support**: Mirrored conveyor flow from right to left, box enters from the right and cart catches on the left.
+
 ---
 
 ## 📦 Getting Started
@@ -281,9 +290,117 @@ class _LogoutControllerExampleState extends State<LogoutControllerExample> {
 
 ---
 
+### 3. Animated Add to Cart Button
+
+#### Basic & Unified Usage
+```dart
+import 'package:flutter/material.dart';
+import 'package:bottomation/bottomation.dart';
+
+Bottomation.addToCart(
+  text: 'Add to cart',
+  style: AddToCartButtonStyle.teal(),
+  onTap: () async {
+    // Perform async add-to-cart API call or state update
+    await Future.delayed(const Duration(seconds: 1));
+  },
+  onSuccess: () {
+    print('Item added to cart! 🛒+1 ✔');
+  },
+)
+```
+
+#### Complete Parameters & Custom Styling
+```dart
+Bottomation.addToCart(
+  text: 'Add to Bag',
+  successText: 'In Cart',
+  // Comprehensive direct customization:
+  backgroundColor: const Color(0xFF0F2B28), // Deep Forest Teal
+  boxColor: const Color(0xFFD99B61),        // Kraft Cardboard
+  boxTapeColor: const Color(0xFFB87843),    // Tape seal
+  conveyorColor: const Color(0xFF1E3A34),   // Track color
+  scannerLaserColor: const Color(0xFFEF4444), // Red Laser Beam
+  cartColor: Colors.white,                  // Shopping Cart
+  badgeColor: const Color(0xFFF59E0B),      // Amber +1 Badge
+  badgeTextColor: Colors.white,
+  textColor: Colors.white,
+  successColor: const Color(0xFF10B981),    // Emerald Success
+  checkmarkColor: Colors.white,
+  width: 210.0,
+  height: 54.0,
+  elevation: 8.0,
+  onTap: () async => await Future.delayed(const Duration(milliseconds: 1000)),
+  onSuccess: () => print('Added to cart!'),
+)
+```
+
+#### Arabic / RTL Example ("أضف إلى السلة") 🇸🇦 🇪🇬
+```dart
+Bottomation.addToCart(
+  text: 'أضف إلى السلة',
+  successText: 'تمت الإضافة',
+  style: AddToCartButtonStyle.teal(),
+  onTap: () async {
+    await Future.delayed(const Duration(seconds: 1));
+  },
+  onSuccess: () => print('تمت إضافة المنتج إلى السلة بنجاح! 🛒+1 ✔'),
+)
+```
+
+#### Programmatic Controller (`AnimatedAddToCartButtonController`)
+```dart
+class CartControllerExample extends StatefulWidget {
+  const CartControllerExample({super.key});
+
+  @override
+  State<CartControllerExample> createState() => _CartControllerExampleState();
+}
+
+class _CartControllerExampleState extends State<CartControllerExample> {
+  final AnimatedAddToCartButtonController _controller = AnimatedAddToCartButtonController();
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Bottomation.addToCart(
+          controller: _controller,
+          text: 'Add to cart',
+          onTap: () async => await Future.delayed(const Duration(seconds: 1)),
+        ),
+        const SizedBox(height: 16),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ElevatedButton(
+              onPressed: () => _controller.trigger(),
+              child: const Text('Trigger'),
+            ),
+            const SizedBox(width: 12),
+            ElevatedButton(
+              onPressed: () => _controller.reset(),
+              child: const Text('Reset'),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+}
+```
+
+---
+
 ## 🎨 Built-in Style Presets
 
-Both buttons include ready-to-use style presets out of the box:
+All buttons include ready-to-use style presets out of the box:
 
 ```dart
 // Delete presets
@@ -293,24 +410,11 @@ DeleteButtonStyle.dark()
 // Logout presets
 LogoutButtonStyle.crimson()
 LogoutButtonStyle.dark()
-```
 
-Or configure custom style objects:
-
-```dart
-DeleteButtonStyle(
-  backgroundColor: Colors.red.shade700,
-  backgroundGradient: LinearGradient(
-    colors: [Colors.red.shade400, Colors.red.shade900],
-  ),
-  iconColor: Colors.white,
-  progressColor: Colors.amber,
-  successColor: Colors.green,
-  checkmarkColor: Colors.white,
-  height: 56.0,
-  width: 180.0,
-  elevation: 8.0,
-)
+// Add to Cart presets
+AddToCartButtonStyle.teal()    // Modern deep forest teal (Default)
+AddToCartButtonStyle.dark()    // Sleek charcoal factory
+AddToCartButtonStyle.indigo()  // Midnight indigo
 ```
 
 ---
@@ -323,6 +427,7 @@ DeleteButtonStyle(
 | :--- | :--- | :--- |
 | `Bottomation.delete()` | ✅ Released | Letter suction along Bézier curves into trash bin, hinge lid rotation, circle morphing, loading arc, success checkmark. |
 | `Bottomation.logout()` | ✅ Released | 3D swinging arched doorway, walking letter march through threshold with depth clipping, latching shut, success checkmark. |
+| `Bottomation.addToCart()` | ✅ Released | Factory conveyor belt, overhead red laser scanning, automatic box sealing, shipping label stamping, cart drop physics, and popping "+1" badge. |
 
 ---
 

@@ -48,6 +48,14 @@ class _BottomationShowcasePageState extends State<BottomationShowcasePage> {
   final AnimatedLogoutButtonController _arabicLogoutController =
       AnimatedLogoutButtonController();
 
+  // Add to cart animation controllers
+  final AnimatedAddToCartButtonController _tealCartController =
+      AnimatedAddToCartButtonController();
+  final AnimatedAddToCartButtonController _darkCartController =
+      AnimatedAddToCartButtonController();
+  final AnimatedAddToCartButtonController _arabicCartController =
+      AnimatedAddToCartButtonController();
+
   String _lastEvent = 'Tap any button to see the micro-interactions in action';
 
   @override
@@ -57,6 +65,9 @@ class _BottomationShowcasePageState extends State<BottomationShowcasePage> {
     _arabicDeleteController.dispose();
     _crimsonLogoutController.dispose();
     _arabicLogoutController.dispose();
+    _tealCartController.dispose();
+    _darkCartController.dispose();
+    _arabicCartController.dispose();
     super.dispose();
   }
 
@@ -229,12 +240,7 @@ class _BottomationShowcasePageState extends State<BottomationShowcasePage> {
                       child: Bottomation.logout(
                         controller: _crimsonLogoutController,
                         text: 'Logout',
-                        doorColor: Colors.white,
                         style: LogoutButtonStyle.crimson(),
-                        backgroundColor: Colors.black,
-                        backgroundGradient: LinearGradient(
-                          colors: [Colors.red, Colors.red],
-                        ),
                         onTap: () async {
                           _showFeedback('Logging out of account...');
                         },
@@ -261,6 +267,82 @@ class _BottomationShowcasePageState extends State<BottomationShowcasePage> {
                         },
                       ),
                       onReset: () => _arabicLogoutController.reset(),
+                    ),
+                  ],
+                ),
+
+                const SizedBox(height: 48),
+
+                // ==========================================
+                // SECTION 3: ANIMATED ADD TO CART BUTTONS
+                // ==========================================
+                _buildSectionHeader(
+                  badge: 'Micro-Interaction #3',
+                  title: 'Animated Add to Cart (Factory & Conveyor)',
+                ),
+                const SizedBox(height: 18),
+                Wrap(
+                  spacing: 20,
+                  runSpacing: 20,
+                  alignment: WrapAlignment.center,
+                  children: [
+                    _buildButtonCard(
+                      title: 'Teal Forest (Default)',
+                      subtitle: 'Conveyor, Laser, Cart & +1 Badge',
+                      child: Bottomation.addToCart(
+                        controller: _tealCartController,
+                        text: 'Add to cart',
+                        style: AddToCartButtonStyle.teal(),
+                        onTap: () async {
+                          _showFeedback(
+                            'Packaging item and adding to cart (Teal)...',
+                          );
+                        },
+                        onSuccess: () {
+                          _showFeedback('Item added to cart! 🛒+1 ✔');
+                        },
+                      ),
+                      onReset: () => _tealCartController.reset(),
+                    ),
+                    _buildButtonCard(
+                      title: 'Dark Charcoal Factory',
+                      subtitle: 'Industrial Factory Theme',
+                      child: Bottomation.addToCart(
+                        controller: _darkCartController,
+                        text: 'Add to cart',
+                        // style: AddToCartButtonStyle.dark(),
+                        backgroundColor: Colors.blue,
+                        borderRadius: 20,
+
+                        onTap: () async {
+                          _showFeedback('Packaging item (Dark)...');
+                        },
+                        onSuccess: () {
+                          _showFeedback('Dark: Item added to cart! 🛒+1 ✔');
+                        },
+                      ),
+                      onReset: () => _darkCartController.reset(),
+                    ),
+                    _buildButtonCard(
+                      title: 'Arabic RTL (أضف إلى السلة)',
+                      subtitle: 'Mirrored Conveyor & Cart Physics',
+                      child: Bottomation.addToCart(
+                        controller: _arabicCartController,
+                        text: 'أضف إلى السلة',
+                        successText: 'تمت الإضافة',
+                        width: 215.0,
+                        height: 56.0,
+                        style: AddToCartButtonStyle.teal(),
+                        onTap: () async {
+                          _showFeedback('جاري تجهيز الصندوق وإضافته للسلة...');
+                        },
+                        onSuccess: () {
+                          _showFeedback(
+                            'تمت إضافة المنتج إلى السلة بنجاح! 🛒+1 ✔',
+                          );
+                        },
+                      ),
+                      onReset: () => _arabicCartController.reset(),
                     ),
                   ],
                 ),
