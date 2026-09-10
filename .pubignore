@@ -1,0 +1,10 @@
+# Files ignored by pub.dev when publishing
+reference/
+.idea/
+*.iml
+.dart_tool/
+build/
+example/build/
+example/.dart_tool/
+example/macos/Flutter/ephemeral/
+example/ios/Flutter/ephemeral/

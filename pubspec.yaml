@@ -1,0 +1,21 @@
+name: bottomation
+description: A delightful collection of interactive animated buttons and micro-interactions for Flutter apps.
+version: 0.0.1
+homepage: https://github.com/abdelhaliem/bottomation_pack
+repository: https://github.com/abdelhaliem/bottomation_pack
+issue_tracker: https://github.com/abdelhaliem/bottomation_pack/issues
+
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+  flutter: ">=3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+
+flutter:
