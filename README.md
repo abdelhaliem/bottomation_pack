@@ -38,6 +38,11 @@ A delightful collection of interactive animated buttons and micro-interactions f
 - **Arabic & RTL Support**: Door places on the correct side, swings with proper perspective, and Arabic phrases (`تسجيل الخروج`) march through the threshold.
 
 ### 3. 🛒 Animated Add to Cart Button (`Bottomation.addToCart`)
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/abdelhaliem/bottomation_pack/main/bottomation_ex/add_to_cart.gif" width="420" alt="Animated Add to Cart Button" />
+</p>
+
 - **Factory Conveyor Belt & Rollers**: Horizontal industrial conveyor track with moving roller teeth.
 - **Overhead Laser Scanning**: Overhead scanner module shooting a focused red laser beam across the package.
 - **Automatic Flap Sealing & Label Stamping**: Cardboard flaps fold down and seal, and a white shipping label stamps onto the front face.
