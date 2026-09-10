@@ -2,7 +2,7 @@
 
 A delightful collection of interactive animated buttons and micro-interactions for Flutter applications. Built with 100% pure Flutter (`CustomPainter` & `AnimationController`) for peak 60/120 FPS performance with zero external asset dependencies.
 
-[![pub package](https://img.shields.io/badge/pub-v0.0.1-blue.svg)](https://pub.dev/packages/bottomation)
+[![pub package](https://img.shields.io/badge/pub-v0.0.2-blue.svg)](https://pub.dev/packages/bottomation)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Flutter](https://img.shields.io/badge/Flutter-3.0%2B-02569B?logo=flutter)](https://flutter.dev)
 
@@ -51,6 +51,18 @@ A delightful collection of interactive animated buttons and micro-interactions f
 - **Success State ("Added")**: Clean emerald circular checkmark with "Added" (or "تمت الإضافة") label.
 - **Arabic & RTL Support**: Mirrored conveyor flow from right to left, box enters from the right and cart catches on the left.
 
+### 4. 🚚 Animated Place Order Button (`Bottomation.placeOrder`)
+
+- **Top-Down Articulated Delivery Truck**: Bird's-eye view delivery vehicle with cab, windshield, headlights, and cargo container.
+- **Dual Articulating Cargo Doors**: Rear cargo doors swing open outward with realistic hinge rotation to receive packages.
+- **Automated Package Loading**: Kraft cardboard box glides smoothly between open doors into the truck's cargo hold.
+- **Door Latching & Sealing**: Rear cargo doors snap shut and latch securely.
+- **Illuminated Headlight Beams**: Dual front headlights turn on with glowing triangular projection cones.
+- **Animated Highway Lane Lines**: Dashed road divider lines extend across the highway path ahead.
+- **Recoil & Acceleration Drive-Off**: Vehicle exhibits subtle anticipation recoil before rocketing forward at high speed off-screen.
+- **Success State ("Order Placed")**: Smooth transition to success text and animated checkmark (✔).
+- **Arabic & RTL Support**: Mirrored right-to-left layout: vehicle enters from left, drives off to left, and package enters from right with Arabic text ("إتمام الطلب" -> "تم تأكيد الطلب").
+
 ---
 
 ## 📦 Getting Started
@@ -59,7 +71,7 @@ Add `bottomation` to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  bottomation: ^0.0.1
+  bottomation: ^0.0.2
 ```
 
 Or run:
@@ -403,6 +415,83 @@ class _CartControllerExampleState extends State<CartControllerExample> {
 
 ---
 
+### 4. Animated Place Order Button (`Bottomation.placeOrder`)
+
+A cinematic top-down delivery truck animation where a delivery vehicle reverses in, rear cargo doors swing open, a cardboard package slides into the cargo hold, doors snap shut, headlights illuminate the highway ahead with animated road lane dividers, and the truck rockets away at high speed!
+
+#### Basic Usage
+```dart
+Bottomation.placeOrder(
+  text: 'Complete Order',
+  successText: 'Order Placed',
+  onTap: () async {
+    // Perform order placement / API call
+    await Future.delayed(const Duration(milliseconds: 1500));
+  },
+  onSuccess: () {
+    print('Order placed successfully! 🚚💨 ✔');
+  },
+)
+```
+
+#### Custom Theming & Colors
+Every single element can be customized directly:
+```dart
+Bottomation.placeOrder(
+  text: 'Dispatch Delivery',
+  successText: 'Dispatched',
+  style: PlaceOrderButtonStyle.dark(),
+  backgroundColor: const Color(0xFF1E2028),      // Asphalt road color
+  truckColor: const Color(0xFF2563EB),           // Cab body color
+  cargoColor: const Color(0xFFF3F4F6),           // Cargo box color
+  windshieldColor: const Color(0xFF1E293B),      // Windshield glass
+  headlightColor: const Color(0xFFFBBF24),       // Headlight bulb
+  headlightBeamColor: const Color(0x33FBBF24),   // Illuminated light cones
+  packageColor: const Color(0xFFD99B61),         // Kraft cardboard box
+  packageTapeColor: const Color(0xFFB87843),     // Sealing tape
+  roadLineColor: const Color(0xFFE5E7EB),        // Dashed road lines
+  textColor: Colors.white,
+  successColor: const Color(0xFF10B981),         // Emerald success
+  checkmarkColor: const Color(0xFF10B981),
+  width: 220.0,
+  height: 54.0,
+  elevation: 4.0,
+  onTap: () async => await Future.delayed(const Duration(seconds: 1)),
+  onSuccess: () => print('Order dispatched!'),
+)
+```
+
+#### Arabic / RTL Example ("إتمام الطلب") 🇸🇦 🇪🇬
+Supports seamless RTL mirroring (truck enters from left, package from right, vehicle launches off to the left):
+```dart
+Bottomation.placeOrder(
+  text: 'إتمام الطلب',
+  successText: 'تم تأكيد الطلب',
+  style: PlaceOrderButtonStyle.dark(),
+  onTap: () async {
+    await Future.delayed(const Duration(seconds: 1));
+  },
+  onSuccess: () => print('تم تأكيد الطلب بنجاح! 🚚💨 ✔'),
+)
+```
+
+#### Programmatic Controller (`AnimatedPlaceOrderButtonController`)
+```dart
+final controller = AnimatedPlaceOrderButtonController();
+
+Bottomation.placeOrder(
+  controller: controller,
+  text: 'Complete Order',
+  onTap: () async {},
+)
+
+// Trigger or reset programmatically
+controller.trigger();
+controller.reset();
+```
+
+---
+
 ## 🎨 Built-in Style Presets
 
 All buttons include ready-to-use style presets out of the box:
@@ -420,6 +509,11 @@ LogoutButtonStyle.dark()
 AddToCartButtonStyle.teal()    // Modern deep forest teal (Default)
 AddToCartButtonStyle.dark()    // Sleek charcoal factory
 AddToCartButtonStyle.indigo()  // Midnight indigo
+
+// Place Order presets
+PlaceOrderButtonStyle.dark()      // Modern sleek asphalt & cobalt truck (Default)
+PlaceOrderButtonStyle.midnight()  // Midnight navy & electric orange truck
+PlaceOrderButtonStyle.emerald()   // Forest emerald & bright green truck
 ```
 
 ---
@@ -433,6 +527,7 @@ AddToCartButtonStyle.indigo()  // Midnight indigo
 | `Bottomation.delete()` | ✅ Released | Letter suction along Bézier curves into trash bin, hinge lid rotation, circle morphing, loading arc, success checkmark. |
 | `Bottomation.logout()` | ✅ Released | 3D swinging arched doorway, walking letter march through threshold with depth clipping, latching shut, success checkmark. |
 | `Bottomation.addToCart()` | ✅ Released | Factory conveyor belt, overhead red laser scanning, automatic box sealing, shipping label stamping, cart drop physics, and popping "+1" badge. |
+| `Bottomation.placeOrder()` | ✅ Released | Top-down delivery truck loading, articulating rear cargo doors, automated package glide, headlight light cones, dashed road lines, and acceleration drive-off. |
 
 ---
 

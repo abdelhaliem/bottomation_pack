@@ -8,6 +8,9 @@ import '../animations/delete/delete_button_style.dart';
 import '../animations/logout/animated_logout_button.dart';
 import '../animations/logout/logout_button_controller.dart';
 import '../animations/logout/logout_button_style.dart';
+import '../animations/place_order/animated_place_order_button.dart';
+import '../animations/place_order/place_order_button_controller.dart';
+import '../animations/place_order/place_order_button_style.dart';
 
 /// The primary unified API for [bottomation].
 /// Provides convenient factory methods for every available button animation.
@@ -209,6 +212,86 @@ class Bottomation {
       scanAndSealDuration: scanAndSealDuration,
       transportAndDropDuration: transportAndDropDuration,
       bounceAndBadgeDuration: bounceAndBadgeDuration,
+      successDuration: successDuration,
+    );
+  }
+
+  /// Creates an interactive animated place-order button with top-down delivery
+  /// truck, articulating rear cargo doors, automated package loading, illuminated headlights,
+  /// dashed road lane markings, and an acceleration drive-off sequence.
+  ///
+  /// Supports bilingual LTR/RTL layouts (e.g. Arabic "إتمام الطلب" -> "تم تأكيد الطلب")
+  /// and direct customization for every vehicle, package, road, and button property.
+  static Widget placeOrder({
+    Key? key,
+    String text = 'Complete Order',
+    String successText = 'Order Placed',
+    PlaceOrderButtonStyle? style,
+    Color? backgroundColor,
+    Gradient? backgroundGradient,
+    Color? truckColor,
+    Color? cargoColor,
+    Color? windshieldColor,
+    Color? headlightColor,
+    Color? headlightBeamColor,
+    Color? packageColor,
+    Color? packageTapeColor,
+    Color? roadLineColor,
+    Color? textColor,
+    Color? successColor,
+    Color? successTextColor,
+    Color? checkmarkColor,
+    TextDirection? textDirection,
+    double? width,
+    double? height,
+    double? borderRadius,
+    double? elevation,
+    AnimatedPlaceOrderButtonController? controller,
+    Future<void> Function()? onTap,
+    VoidCallback? onSuccess,
+    Duration? autoResetDuration = const Duration(seconds: 3),
+    Duration entryDuration = const Duration(milliseconds: 550),
+    Duration doorsOpenDuration = const Duration(milliseconds: 320),
+    Duration packageLoadDuration = const Duration(milliseconds: 500),
+    Duration doorsCloseDuration = const Duration(milliseconds: 300),
+    Duration headlightsAndRoadDuration = const Duration(milliseconds: 450),
+    Duration driveOffDuration = const Duration(milliseconds: 650),
+    Duration successDuration = const Duration(milliseconds: 450),
+  }) {
+    return AnimatedPlaceOrderButton(
+      key: key,
+      text: text,
+      successText: successText,
+      style: style,
+      backgroundColor: backgroundColor,
+      backgroundGradient: backgroundGradient,
+      truckColor: truckColor,
+      cargoColor: cargoColor,
+      windshieldColor: windshieldColor,
+      headlightColor: headlightColor,
+      headlightBeamColor: headlightBeamColor,
+      packageColor: packageColor,
+      packageTapeColor: packageTapeColor,
+      roadLineColor: roadLineColor,
+      textColor: textColor,
+      successColor: successColor,
+      successTextColor: successTextColor,
+      checkmarkColor: checkmarkColor,
+      textDirection: textDirection,
+      width: width,
+      height: height,
+      borderRadius: borderRadius,
+      elevation: elevation,
+      controller: controller,
+      onTap: onTap,
+      onSuccess: onSuccess,
+      autoResetDuration: autoResetDuration,
+      entryDuration: entryDuration,
+      doorsOpenDuration: doorsOpenDuration,
+      packageLoadDuration: packageLoadDuration,
+      doorsCloseDuration: doorsCloseDuration,
+      headlightsAndRoadDuration: headlightsAndRoadDuration,
+      driveOffDuration: driveOffDuration,
       successDuration: successDuration,
     );
   }

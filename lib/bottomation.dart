@@ -35,3 +35,13 @@ export 'src/animations/add_to_cart/painters/conveyor_belt_painter.dart';
 export 'src/animations/add_to_cart/painters/factory_box_painter.dart';
 export 'src/animations/add_to_cart/painters/isometric_box_painter.dart';
 export 'src/animations/add_to_cart/painters/shopping_cart_painter.dart';
+
+// Place Order Animation Module
+export 'src/animations/place_order/animated_place_order_button.dart';
+export 'src/animations/place_order/place_order_button_controller.dart';
+export 'src/animations/place_order/place_order_button_style.dart';
+export 'src/animations/place_order/painters/order_package_painter.dart';
+export 'src/animations/place_order/painters/place_order_idle_icon_painter.dart';
+export 'src/animations/place_order/painters/road_line_painter.dart';
+export 'src/animations/place_order/painters/top_down_truck_painter.dart';
+

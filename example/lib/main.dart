@@ -56,6 +56,14 @@ class _BottomationShowcasePageState extends State<BottomationShowcasePage> {
   final AnimatedAddToCartButtonController _arabicCartController =
       AnimatedAddToCartButtonController();
 
+  // Place order animation controllers
+  final AnimatedPlaceOrderButtonController _darkPlaceOrderController =
+      AnimatedPlaceOrderButtonController();
+  final AnimatedPlaceOrderButtonController _midnightPlaceOrderController =
+      AnimatedPlaceOrderButtonController();
+  final AnimatedPlaceOrderButtonController _arabicPlaceOrderController =
+      AnimatedPlaceOrderButtonController();
+
   String _lastEvent = 'Tap any button to see the micro-interactions in action';
 
   @override
@@ -68,6 +76,9 @@ class _BottomationShowcasePageState extends State<BottomationShowcasePage> {
     _tealCartController.dispose();
     _darkCartController.dispose();
     _arabicCartController.dispose();
+    _darkPlaceOrderController.dispose();
+    _midnightPlaceOrderController.dispose();
+    _arabicPlaceOrderController.dispose();
     super.dispose();
   }
 
@@ -343,6 +354,79 @@ class _BottomationShowcasePageState extends State<BottomationShowcasePage> {
                         },
                       ),
                       onReset: () => _arabicCartController.reset(),
+                    ),
+                  ],
+                ),
+
+                const SizedBox(height: 40),
+
+                // ==========================================
+                // SECTION 4: PLACE ORDER BUTTONS
+                // ==========================================
+                _buildSectionHeader(
+                  badge: 'NEW IN V0.0.2',
+                  title: '4. 🚚 Animated Place Order Button',
+                ),
+                const SizedBox(height: 18),
+                Wrap(
+                  spacing: 20,
+                  runSpacing: 20,
+                  alignment: WrapAlignment.center,
+                  children: [
+                    _buildButtonCard(
+                      title: 'Asphalt & Cobalt Truck',
+                      subtitle: 'Top-Down Delivery Sequence',
+                      child: Bottomation.placeOrder(
+                        controller: _darkPlaceOrderController,
+                        text: 'Complete Order',
+                        successText: 'Order Placed',
+                        style: PlaceOrderButtonStyle.dark(),
+                        onTap: () async {
+                          _showFeedback('Loading package into delivery truck...');
+                        },
+                        onSuccess: () {
+                          _showFeedback('Order dispatched! Fast highway delivery 🚚💨 ✔');
+                        },
+                      ),
+                      onReset: () => _darkPlaceOrderController.reset(),
+                    ),
+                    _buildButtonCard(
+                      title: 'Midnight & Orange Truck',
+                      subtitle: 'Midnight Freight Theme',
+                      child: Bottomation.placeOrder(
+                        controller: _midnightPlaceOrderController,
+                        text: 'Place Order',
+                        successText: 'Dispatched',
+                        style: PlaceOrderButtonStyle.midnight(),
+                        onTap: () async {
+                          _showFeedback('Dispatched: Preparing cargo box...');
+                        },
+                        onSuccess: () {
+                          _showFeedback('Midnight: Order on its way! 🚚💨 ✔');
+                        },
+                      ),
+                      onReset: () => _midnightPlaceOrderController.reset(),
+                    ),
+                    _buildButtonCard(
+                      title: 'Arabic RTL (إتمام الطلب)',
+                      subtitle: 'Mirrored Left-Exit Highway Drive',
+                      child: Bottomation.placeOrder(
+                        controller: _arabicPlaceOrderController,
+                        text: 'إتمام الطلب',
+                        successText: 'تم تأكيد الطلب',
+                        width: 220.0,
+                        height: 54.0,
+                        style: PlaceOrderButtonStyle.dark(),
+                        onTap: () async {
+                          _showFeedback('جاري تحميل الشحنة وتأكيد الطلب...');
+                        },
+                        onSuccess: () {
+                          _showFeedback(
+                            'تم تأكيد الطلب وانطلاق الشاحنة بنجاح! 🚚💨 ✔',
+                          );
+                        },
+                      ),
+                      onReset: () => _arabicPlaceOrderController.reset(),
                     ),
                   ],
                 ),
