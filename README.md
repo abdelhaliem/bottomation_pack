@@ -8,20 +8,24 @@ A delightful collection of interactive animated buttons and micro-interactions f
 
 ---
 
-## ✨ Features
+## ✨ Available Buttons & Features
 
-- **🗑️ Animated Delete Button**:
-  - **Organic Letter Suction**: Letters of the text (e.g. `D - e - l - e - t - e`) dynamically scatter and fly along Bézier curves directly into the trash bin.
-  - **Hinge Lid Physics**: The trash can lid tilts open dynamically and closes when suction is complete.
-  - **Pill-to-Circle Morphing**: Smooth width animation collapsing the button into a focused action circle.
-  - **Circular Progress Arc**: 360-degree loading ring indicating background deletion progress.
-  - **Success Checkmark State**: Color transition with an animated spring checkmark (✔) on completion.
-- **🎨 Built-in Presets**:
-  - `DeleteButtonStyle.dark()` (Sleek charcoal with deep shadows).
-  - `DeleteButtonStyle.purple()` (Vibrant purple gradient).
-  - Fully customizable colors, dimensions, gradients, text styles, and elevation.
-- **⚡ Unified API**: Consistent, modular API (`Bottomation.delete(...)`) ready for multiple future button micro-interactions.
-- **🎯 Full Control**: Includes `AnimatedDeleteButtonController` for programmatic triggering and resetting.
+`bottomation` comes with production-ready, highly engaging micro-interaction buttons:
+
+### 1. 🗑️ Animated Delete Button (`Bottomation.delete`)
+- **Organic Letter Suction**: Letters of the text (e.g. `D - e - l - e - t - e` or `ح - ذ - ف`) dynamically lift, scatter, and fly along Bézier curves straight into the trash bin.
+- **Hinge Lid Physics**: The trash can lid tilts open dynamically to receive the incoming letters and closes once all letters are inside.
+- **Pill-to-Circle Morphing**: Smooth width animation collapsing the button into a focused action circle.
+- **Circular Progress Arc**: 360-degree loading ring indicating background deletion/network operation.
+- **Success Checkmark State**: Morphing color transition with an animated spring checkmark (✔) on completion.
+- **Arabic & RTL Support**: Native RTL detection with mirrored bin position, reverse lid tilting, and accurate Arabic cursive ligature decomposition.
+
+### 2. 🚪 Animated Logout Button (`Bottomation.logout`)
+- **3D Perspective Swinging Door**: Slender architectural doorway with arched top corners and flat sill, swinging open into 3D perspective.
+- **Marching Letters**: Characters walk sequentially towards and step through the doorway threshold with a dynamic walking bounce.
+- **Threshold Clipping**: Letters disappear seamlessly behind the door frame as they cross the threshold.
+- **Door Latch & Success State**: The door swings shut and latches, collapsing into a loading circle and completing with a success checkmark.
+- **Arabic & RTL Support**: Door places on the correct side, swings with proper perspective, and Arabic phrases (`تسجيل الخروج`) march through the threshold.
 
 ---
 
@@ -42,98 +46,246 @@ flutter pub add bottomation
 
 ---
 
-## 🚀 Quick Usage
+## 🚀 Usage & Examples
 
-### 1. Unified API (Recommended)
+### 1. Animated Delete Button
 
+#### Basic & Unified Usage
 ```dart
 import 'package:flutter/material.dart';
 import 'package:bottomation/bottomation.dart';
 
-class MyDeleteScreen extends StatelessWidget {
-  const MyDeleteScreen({super.key});
+Bottomation.delete(
+  text: 'Delete',
+  style: DeleteButtonStyle.purple(),
+  onTap: () async {
+    // Perform async delete operation (e.g. API call or DB query)
+    await Future.delayed(const Duration(seconds: 1));
+  },
+  onSuccess: () {
+    print('Item deleted successfully! ✔');
+  },
+)
+```
+
+#### Complete Parameters & Custom Styling
+```dart
+Bottomation.delete(
+  text: 'Delete Account',
+  // Direct customization without needing a style object:
+  backgroundColor: const Color(0xFFDC2626), // Custom Red
+  textColor: Colors.white,
+  iconColor: Colors.white,
+  progressColor: Colors.amber,
+  successColor: const Color(0xFF16A34A),
+  checkmarkColor: Colors.white,
+  width: 190.0,
+  height: 52.0,
+  borderRadius: 26.0,
+  elevation: 6.0,
+  textStyle: const TextStyle(
+    fontSize: 16,
+    fontWeight: FontWeight.w600,
+    letterSpacing: 0.5,
+  ),
+  onTap: () async {
+    await Future.delayed(const Duration(milliseconds: 1200));
+  },
+  onSuccess: () => print('Account deleted!'),
+)
+```
+
+#### Arabic / RTL Example ("حذف المنتج") 🇸🇦 🇪🇬
+```dart
+Bottomation.delete(
+  text: 'حذف المنتج',
+  backgroundColor: const Color(0xFFE11D48),
+  textColor: Colors.white,
+  iconColor: Colors.white,
+  onTap: () async {
+    await Future.delayed(const Duration(seconds: 1));
+  },
+  onSuccess: () => print('تم حذف المنتج بنجاح! ✔'),
+)
+```
+
+#### Programmatic Controller (`AnimatedDeleteButtonController`)
+```dart
+class DeleteControllerExample extends StatefulWidget {
+  const DeleteControllerExample({super.key});
+
+  @override
+  State<DeleteControllerExample> createState() => _DeleteControllerExampleState();
+}
+
+class _DeleteControllerExampleState extends State<DeleteControllerExample> {
+  final AnimatedDeleteButtonController _controller = AnimatedDeleteButtonController();
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Bottomation.delete(
-        text: 'Delete',
-        style: DeleteButtonStyle.purple(),
-        onTap: () async {
-          // Perform your delete API or database operation
-          await Future.delayed(const Duration(seconds: 1));
-        },
-        onSuccess: () {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Item deleted successfully!')),
-          );
-        },
-      ),
+    return Column(
+      children: [
+        Bottomation.delete(
+          controller: _controller,
+          text: 'Delete',
+          onTap: () async => await Future.delayed(const Duration(seconds: 1)),
+        ),
+        const SizedBox(height: 16),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ElevatedButton(
+              onPressed: () => _controller.trigger(), // Programmatically trigger
+              child: const Text('Trigger'),
+            ),
+            const SizedBox(width: 12),
+            ElevatedButton(
+              onPressed: () => _controller.reset(), // Reset to idle
+              child: const Text('Reset'),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }
 ```
 
-### 2. Using Dark Preset
+---
 
+### 2. Animated Logout Button
+
+#### Basic & Unified Usage
 ```dart
-Bottomation.delete(
-  style: DeleteButtonStyle.dark(),
-  onSuccess: () => print('Deleted!'),
+import 'package:flutter/material.dart';
+import 'package:bottomation/bottomation.dart';
+
+Bottomation.logout(
+  text: 'Log out',
+  style: LogoutButtonStyle.crimson(),
+  onTap: () async {
+    // Perform authentication logout or token cleanup
+    await Future.delayed(const Duration(seconds: 1));
+  },
+  onSuccess: () {
+    print('Logged out successfully! 🚪');
+  },
 )
 ```
 
-### 2. Direct Color Customization
-
-You don't even need to instantiate `DeleteButtonStyle` — customize colors directly:
-
+#### Complete Parameters & Custom Styling
 ```dart
-Bottomation.delete(
-  text: 'Delete',
-  backgroundColor: const Color(0xFFDC2626), // Custom Red
+Bottomation.logout(
+  text: 'Sign out',
+  // Direct customization:
+  backgroundColor: const Color(0xFF1E293B), // Dark Slate
   textColor: Colors.white,
-  iconColor: Colors.white,
-  successColor: const Color(0xFF16A34A),
-  onSuccess: () => print('Item deleted! ✔'),
+  doorColor: const Color(0xFF64748B),
+  doorFrameColor: const Color(0xFF94A3B8),
+  progressColor: const Color(0xFF38BDF8),
+  successColor: const Color(0xFF10B981),
+  checkmarkColor: Colors.white,
+  width: 170.0,
+  height: 52.0,
+  borderRadius: 26.0,
+  elevation: 6.0,
+  textStyle: const TextStyle(
+    fontSize: 16,
+    fontWeight: FontWeight.w600,
+  ),
+  onTap: () async {
+    await Future.delayed(const Duration(milliseconds: 1200));
+  },
+  onSuccess: () => print('User signed out'),
 )
 ```
 
-### 3. Arabic & RTL Support ("حذف") 🇸🇦 🇪🇬
-
-Full native Right-to-Left support with automatic Arabic script detection. In RTL mode, the trash bin positions itself on the right, the lid tilts open facing the letters, and the Arabic cursive word dynamically breaks apart into individual flying glyphs (`ح - ذ - ف`):
-
+#### Arabic / RTL Example ("تسجيل الخروج") 🇸🇦 🇪🇬
 ```dart
-Bottomation.delete(
-  text: 'حذف',
-  backgroundColor: const Color(0xFFE11D48),
+Bottomation.logout(
+  text: 'تسجيل الخروج',
+  backgroundColor: const Color(0xFFBE123C), // Crimson
   textColor: Colors.white,
-  iconColor: Colors.white,
-  onSuccess: () => print('تم الحذف بنجاح! ✔'),
+  doorColor: Colors.white70,
+  doorFrameColor: Colors.white,
+  onTap: () async {
+    await Future.delayed(const Duration(seconds: 1));
+  },
+  onSuccess: () => print('تم تسجيل الخروج بنجاح! ✔'),
 )
 ```
 
-### 4. Programmatic Control (Controller)
-
+#### Programmatic Controller (`AnimatedLogoutButtonController`)
 ```dart
-final controller = AnimatedDeleteButtonController();
+class LogoutControllerExample extends StatefulWidget {
+  const LogoutControllerExample({super.key});
 
-// Trigger the animation sequence programmatically:
-controller.trigger();
+  @override
+  State<LogoutControllerExample> createState() => _LogoutControllerExampleState();
+}
 
-// Reset the button back to its initial idle state:
-controller.reset();
+class _LogoutControllerExampleState extends State<LogoutControllerExample> {
+  final AnimatedLogoutButtonController _controller = AnimatedLogoutButtonController();
 
-// Listen to state changes:
-controller.addListener(() {
-  print('Current State: ${controller.state}');
-});
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Bottomation.logout(
+          controller: _controller,
+          text: 'Log out',
+          onTap: () async => await Future.delayed(const Duration(seconds: 1)),
+        ),
+        const SizedBox(height: 16),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ElevatedButton(
+              onPressed: () => _controller.trigger(), // Programmatically trigger
+              child: const Text('Trigger'),
+            ),
+            const SizedBox(width: 12),
+            ElevatedButton(
+              onPressed: () => _controller.reset(), // Reset to idle
+              child: const Text('Reset'),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+}
 ```
 
 ---
 
-## 🎨 Customizing Styles
+## 🎨 Built-in Style Presets
 
-You can customize all aspects of the button:
+Both buttons include ready-to-use style presets out of the box:
+
+```dart
+// Delete presets
+DeleteButtonStyle.purple()
+DeleteButtonStyle.dark()
+
+// Logout presets
+LogoutButtonStyle.crimson()
+LogoutButtonStyle.dark()
+```
+
+Or configure custom style objects:
 
 ```dart
 DeleteButtonStyle(
@@ -142,31 +294,25 @@ DeleteButtonStyle(
     colors: [Colors.red.shade400, Colors.red.shade900],
   ),
   iconColor: Colors.white,
-  textStyle: const TextStyle(
-    color: Colors.white,
-    fontWeight: FontWeight.bold,
-    fontSize: 18,
-  ),
   progressColor: Colors.amber,
   successColor: Colors.green,
   checkmarkColor: Colors.white,
   height: 56.0,
   width: 180.0,
-  elevation: 10.0,
+  elevation: 8.0,
 )
 ```
 
 ---
 
-## 🛠️ Architecture & Roadmap
+## 🛠️ Available Buttons
 
-`bottomation` is architected to house a growing library of button micro-interactions:
+`bottomation` is designed with an extensible architecture. Currently available buttons:
 
 | Interaction | Status | Description |
 | :--- | :--- | :--- |
-| `Bottomation.delete()` | ✅ Released | Letter suction, lid rotation, circle morphing, loading arc, success checkmark. |
-| `Bottomation.addToCart()` | 🚧 In Progress | Cart fly-in, item drop, badge count pop. |
-| `Bottomation.create()` | 📋 Planned | Plus morphing into checkmark or unfolding panel. |
+| `Bottomation.delete()` | ✅ Released | Letter suction along Bézier curves into trash bin, hinge lid rotation, circle morphing, loading arc, success checkmark. |
+| `Bottomation.logout()` | ✅ Released | 3D swinging arched doorway, walking letter march through threshold with depth clipping, latching shut, success checkmark. |
 
 ---
 
