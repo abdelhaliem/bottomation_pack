@@ -2,7 +2,7 @@
 
 A delightful collection of interactive animated buttons and micro-interactions for Flutter applications. Built with 100% pure Flutter (`CustomPainter` & `AnimationController`) for peak 60/120 FPS performance with zero external asset dependencies.
 
-[![pub package](https://img.shields.io/badge/pub-v0.0.2-blue.svg)](https://pub.dev/packages/bottomation)
+[![pub package](https://img.shields.io/badge/pub-v0.0.3-blue.svg)](https://pub.dev/packages/bottomation)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Flutter](https://img.shields.io/badge/Flutter-3.0%2B-02569B?logo=flutter)](https://flutter.dev)
 
@@ -75,7 +75,7 @@ Add `bottomation` to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  bottomation: ^0.0.2
+  bottomation: ^0.0.3
 ```
 
 Or run:

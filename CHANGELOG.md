@@ -1,3 +1,8 @@
+## 0.0.3
+
+* Added official showcase preview GIF for `Bottomation.placeOrder(...)` in documentation and README.
+* Synchronized asset previews across GitHub and pub.dev package catalog.
+
 ## 0.0.2
 
 * Added **`Bottomation.placeOrder(...)`** (`AnimatedPlaceOrderButton`):
