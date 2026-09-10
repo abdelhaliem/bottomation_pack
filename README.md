@@ -1,5 +1,9 @@
 # Bottomation 🚀
 
+<p align="center">
+  <img src="https://raw.githubusercontent.com/abdelhaliem/bottomation_pack/main/bottomation_ex/bottomation_banner.jpg" alt="Bottomation Banner" width="100%" />
+</p>
+
 A delightful collection of interactive animated buttons and micro-interactions for Flutter applications. Built with 100% pure Flutter (`CustomPainter` & `AnimationController`) for peak 60/120 FPS performance with zero external asset dependencies.
 
 [![pub package](https://img.shields.io/badge/pub-v0.0.3-blue.svg)](https://pub.dev/packages/bottomation)
